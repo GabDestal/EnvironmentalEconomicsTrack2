@@ -19,8 +19,10 @@ does not restrict the data.
 We use two indices. The first, TXx, is the monthly maximum of daily
 maximum near-surface air temperature, in degrees Celsius. In each grid
 cell, the Atlas takes the highest daily maximum temperature in a given
-month. It then averages these cell values over the country's territory
-[VERIFY: weighting and land-only masking]. Our country-level TXx is
+month. It then averages these cell values over the country's territory,
+weighting each cell of the regular latitude-longitude grid by the cosine
+of its latitude; since ERA5-Land covers land only, sea cells do not enter
+the average (C3S Atlas User Guide). Our country-level TXx is
 therefore the average across the country of each location's hottest day of
 the month, not the single hottest value recorded anywhere in the country.
 We use TXx for June, July and August. Pooling the three summer months gives
@@ -36,8 +38,9 @@ Index over a six-month window (SPEI-6). For each grid cell, the balance
 between precipitation and potential evapotranspiration (PET) is
 accumulated over the preceding six months. It is then transformed, by
 fitting a probability distribution, into standardised units relative to a
-reference period, which the C3S Atlas documentation gives as 1971-2010
-[VERIFY: reference period and PET method in Atlas v2.5]. The index has no
+reference period, which is 1971-2005 in Atlas v2.5. Potential
+evapotranspiration is computed with the Hargreaves formulation, which the
+Atlas has used since version 2.0 (C3S Atlas User Guide). The index has no
 units; negative values indicate conditions drier than the reference
 climate and positive values wetter ones. As with TXx, the Atlas averages
 the grid-cell values over each country. We keep only the September value
@@ -54,12 +57,19 @@ assimilated observations, and its representation of extremes depends on
 the model's physics and on the density of the observing network, which
 was lower in the early decades of our sample [VERIFY]. Trends and changes
 in tail behaviour may therefore partly reflect changes in the observing
-system rather than in the climate. Second, averaging over a country
+system rather than in the climate. A more specific concern affects the
+start of our sample: the Atlas disables ERA5-Land trends before 1978
+because of a potential inconsistency in the ERA5 forcing used for that
+period. Our early period overlaps these years, so part of any difference
+between the early and recent distributions could be a data artefact
+rather than a change in climate. Second, averaging over a country
 smooths local extremes. A heatwave or drought that affects only part of
 the territory is diluted in the national mean, so our series understate
 the severity of the most extreme local events, and the smoothing is
 likely to be stronger for large or climatically diverse countries such as
-France and Spain. Third, SPEI depends on modelling choices: the reference
+France and Spain. In addition, the Atlas documentation does not state how
+grid cells that straddle a national border are treated, so the exact
+spatial footprint of each country average is not known. Third, SPEI depends on modelling choices: the reference
 period sets the zero of the scale, and the PET formulation determines how
 strongly rising temperatures translate into apparent drying. A different
 reference period or PET method could shift the series or change their

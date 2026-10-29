@@ -60,8 +60,9 @@ Atlas chart. It does not truncate the data: every file covers 1950-2025.
   6-month accumulation window: precipitation minus potential
   evapotranspiration (PET), accumulated over 6 months and standardised
   against the reference period 1971-2005, as shown in the Atlas "i"
-  information panel for SPEI-6 / ERA5-Land. Expressed in standardised
-  units; negative = drier than the reference, positive = wetter.
+  information panel for SPEI-6 / ERA5-Land. Expressed in standard
+  deviations from the reference-period mean; negative = drier than the
+  reference, positive = wetter.
 - **Reference period, documentation conflict**: the Atlas documentation is
   inconsistent. The dataset documentation
   (https://confluence.ecmwf.int/x/UZZ-Fw) says 1971-2010; the v2.5

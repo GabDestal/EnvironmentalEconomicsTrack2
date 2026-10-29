@@ -38,16 +38,15 @@ The second index is the Standardised Precipitation-Evapotranspiration
 Index over a six-month window (SPEI-6). For each grid cell, the balance
 between precipitation and potential evapotranspiration (PET) is
 accumulated over the preceding six months. It is then transformed, by
-fitting a probability distribution, into standardised units relative to a
-reference period of 1971-2005. The Atlas documentation is inconsistent on
+fitting a probability distribution, into standard deviations from the
+mean of a reference period of 1971-2005. The Atlas documentation is inconsistent on
 this point: the dataset documentation gives 1971-2010, while the v2.5
 changelog gives 1971-2005 in the context of projections; we report the
 period shown in the Atlas information panel for SPEI-6 computed from
 ERA5-Land. Potential evapotranspiration is computed with the Hargreaves
 formulation, which the Atlas has used since version 2.0, implemented with
 the xclim library (C3S Atlas User Guide and dataset documentation). The
-index has no
-units; negative values indicate conditions drier than the reference
+index has no units; negative values indicate conditions drier than the reference
 climate and positive values wetter ones. As with TXx, the Atlas averages
 the grid-cell values over each country. We keep only the September value
 in each year. Because the window is six months long, the September value

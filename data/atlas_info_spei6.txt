@@ -1,0 +1,15 @@
+Source: Copernicus Interactive Climate Atlas, "i" information panel
+Selection: SPEI-6 / ERA5-Land / Atlas v2.5
+Accessed: 2026-10-29
+Verbatim panel text:
+
+Standardised Precipitation-Evapotranspiration Index (SPEI-6)
+Monthly drought index that compares the accumulated difference between
+precipitation and potential evapotranspiration over a six-month period with the
+long-term distribution for the same location and accumulation period, expressed
+in units of standard deviations from the mean. Potential evapotranspiration is
+estimated using the Hargreaves method (Hargreaves, 1985). The reference period
+is 1971-2005 for observations, reanalysis, and projections. Annual values are
+calculated as the mean of the monthly values provided by the C3S Atlas Dataset
+(https://doi.org/10.24381/cds.h35hb680). Climatologies are calculated as the
+mean of the annual time series.

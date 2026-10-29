@@ -17,10 +17,11 @@ python scripts/check_raw.py
 | URL | https://atlas.climate.copernicus.eu/ |
 | Atlas version | v2.5 (identical across all 16 files) |
 | Underlying dataset | ERA5-Land (identical across all 16 files) |
+| Spatial resolution | 0.1° regular grid (native ERA5-Land resolution retained by the Atlas) |
 | Access / download date | 2026-10-29 (file timestamps 2026-10-29T16:11:03.327Z to 2026-10-29T16:20:22.078Z) |
 | Countries | Spain (ESP), France (FRA), Germany (GER), Sweden (SWE) |
 | Spatial aggregation | Country average of grid-cell values ("Mean of ... series for <country>"), cosine-latitude weighted on the regular lat-lon grid; land cells only (ERA5-Land covers land only) |
-| Documentation | C3S Atlas User Guide, https://confluence.ecmwf.int/x/aZZ-Fw (consulted 2026-10-29) |
+| Documentation | C3S Atlas User Guide, https://confluence.ecmwf.int/x/aZZ-Fw; C3S Atlas dataset documentation, https://confluence.ecmwf.int/x/UZZ-Fw; Atlas "i" information panel for SPEI-6 / ERA5-Land (all consulted 2026-10-29) |
 | Coverage | 1950-2025, 76 years per file, no missing values, no duplicated years, no gaps |
 
 ### Raw file format
@@ -43,24 +44,31 @@ Atlas chart. It does not truncate the data: every file covers 1950-2025.
 ## TXx
 
 - **Definition**: monthly maximum of daily maximum near-surface air
-  temperature.
+  temperature. The daily maximum is the maximum of the hourly 2 m
+  temperature over the day.
 - **Units**: °C.
 - **Temporal resolution**: monthly; we downloaded June, July and August,
   one file per month and country (12 files).
 - **Coverage**: 1950-2025, 76 values per file.
 - **Country average**: the Atlas averages the grid-cell TXx values over the
-  country, with cosine-latitude weights, over land cells only. The result is a country mean of local monthly maxima, not the
-  hottest grid cell.
+  country, with cosine-latitude weights, over land cells only. The result
+  is a country mean of local monthly maxima, not the hottest grid cell.
 
 ## SPEI-6
 
 - **Definition**: Standardised Precipitation-Evapotranspiration Index on a
   6-month accumulation window: precipitation minus potential
   evapotranspiration (PET), accumulated over 6 months and standardised
-  against the reference period 1971-2005 (C3S Atlas User Guide, v2.5).
-  Expressed in standardised units; negative = drier than the reference,
-  positive = wetter.
-- **PET method**: Hargreaves formulation (used by the Atlas since v2.0).
+  against the reference period 1971-2005, as shown in the Atlas "i"
+  information panel for SPEI-6 / ERA5-Land. Expressed in standardised
+  units; negative = drier than the reference, positive = wetter.
+- **Reference period, documentation conflict**: the Atlas documentation is
+  inconsistent. The dataset documentation
+  (https://confluence.ecmwf.int/x/UZZ-Fw) says 1971-2010; the v2.5
+  changelog says 1971-2005, in the context of projections. We report the
+  value shown in the Atlas information panel.
+- **PET method**: Hargreaves formulation (used by the Atlas since v2.0),
+  computed with the xclim library.
 - **Units**: dimensionless (the Atlas labels it "fraction of unity").
 - **Temporal resolution**: monthly; we downloaded September only (4 files).
   The September value covers April-September.
@@ -111,8 +119,5 @@ Source: C3S Atlas User Guide, https://confluence.ecmwf.int/x/aZZ-Fw
 
 Remaining open points in `paper/02_data.md` (marked [VERIFY] there).
 
-- [ ] ERA5-Land horizontal resolution (about 9 km).
-- [ ] Lower density of the observing network in the early decades of the
-      sample.
 - [ ] Closing sentence on tail inference: align with the methods section
       (Section 3).

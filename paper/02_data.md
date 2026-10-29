@@ -5,8 +5,8 @@ Our data come from the Copernicus Interactive Climate Atlas
 Copernicus Climate Change Service (C3S). We downloaded the series through
 the Atlas's regional-information export on 29 October 2026. All series
 come from ERA5-Land, a land-surface reanalysis that ECMWF produces for C3S
-by re-running the land component of the ERA5 model at a finer horizontal
-resolution of about 9 km [VERIFY]. We study four European countries along
+by re-running the land component of the ERA5 model on a 0.1° regular
+grid; the Atlas retains this native resolution. We study four European countries along
 a south-north gradient: Spain, France, Germany and Sweden. Every series is
 annual and covers 1950 to 2025, giving 76 observations per series. A
 validation script (`scripts/check_raw.py`) confirms that all 16 files share
@@ -18,8 +18,9 @@ does not restrict the data.
 
 We use two indices. The first, TXx, is the monthly maximum of daily
 maximum near-surface air temperature, in degrees Celsius. In each grid
-cell, the Atlas takes the highest daily maximum temperature in a given
-month. It then averages these cell values over the country's territory,
+cell, the daily maximum is the highest of the hourly 2 m temperatures of
+that day, and the Atlas takes the highest of these daily maxima in a
+given month. It then averages these cell values over the country's territory,
 weighting each cell of the regular latitude-longitude grid by the cosine
 of its latitude; since ERA5-Land covers land only, sea cells do not enter
 the average (C3S Atlas User Guide). Our country-level TXx is
@@ -38,9 +39,14 @@ Index over a six-month window (SPEI-6). For each grid cell, the balance
 between precipitation and potential evapotranspiration (PET) is
 accumulated over the preceding six months. It is then transformed, by
 fitting a probability distribution, into standardised units relative to a
-reference period, which is 1971-2005 in Atlas v2.5. Potential
-evapotranspiration is computed with the Hargreaves formulation, which the
-Atlas has used since version 2.0 (C3S Atlas User Guide). The index has no
+reference period of 1971-2005. The Atlas documentation is inconsistent on
+this point: the dataset documentation gives 1971-2010, while the v2.5
+changelog gives 1971-2005 in the context of projections; we report the
+period shown in the Atlas information panel for SPEI-6 computed from
+ERA5-Land. Potential evapotranspiration is computed with the Hargreaves
+formulation, which the Atlas has used since version 2.0, implemented with
+the xclim library (C3S Atlas User Guide and dataset documentation). The
+index has no
 units; negative values indicate conditions drier than the reference
 climate and positive values wetter ones. As with TXx, the Atlas averages
 the grid-cell values over each country. We keep only the September value
@@ -54,11 +60,8 @@ non-overlapping observation of warm-season dryness.
 These data have several limitations. First, ERA5-Land is a reanalysis,
 not a set of station observations. It combines a numerical model with
 assimilated observations, and its representation of extremes depends on
-the model's physics and on the density of the observing network, which
-was lower in the early decades of our sample [VERIFY]. Trends and changes
-in tail behaviour may therefore partly reflect changes in the observing
-system rather than in the climate. A more specific concern affects the
-start of our sample: the Atlas disables ERA5-Land trends before 1978
+the model's physics as well as on the observations. A specific concern
+affects the start of our sample: the Atlas disables ERA5-Land trends before 1978
 because of a potential inconsistency in the ERA5 forcing used for that
 period. Our early period overlaps these years, so part of any difference
 between the early and recent distributions could be a data artefact

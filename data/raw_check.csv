@@ -1,0 +1,17 @@
+file,index,variable,units,dataset,month,country,highlighted_period,version,generated_at,n_rows,first_year,last_year,missing_values,missing_years,duplicated_years,min,mean,max,sd
+spei6_ESP_SEP.csv,SPEI-6,Standardised Precipitation-Evapotranspiration Index (SPEI-6),fraction of unity,ERA5-Land,September,Spain,1961-1990,v2.5,2026-10-29T16:19:40.433Z,76,1950,2025,0,0,0,-1.819,-0.285,2.3,0.808
+spei6_FRA_SEP.csv,SPEI-6,Standardised Precipitation-Evapotranspiration Index (SPEI-6),fraction of unity,ERA5-Land,September,France,1961-1990,v2.5,2026-10-29T16:19:53.771Z,76,1950,2025,0,0,0,-1.984,-0.275,1.246,0.858
+spei6_GER_SEP.csv,SPEI-6,Standardised Precipitation-Evapotranspiration Index (SPEI-6),fraction of unity,ERA5-Land,September,Germany,1961-1990,v2.5,2026-10-29T16:20:09.467Z,76,1950,2025,0,0,0,-2.801,-0.119,1.698,0.902
+spei6_SWE_SEP.csv,SPEI-6,Standardised Precipitation-Evapotranspiration Index (SPEI-6),fraction of unity,ERA5-Land,September,Sweden,1961-1990,v2.5,2026-10-29T16:20:22.078Z,76,1950,2025,0,0,0,-1.987,-0.037,1.558,0.754
+txx_ESP_AUG.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,August,Spain,1961-1990,v2.5,2026-10-29T16:16:39.703Z,76,1950,2025,0,0,0,29.813,33.809,38.175,1.775
+txx_ESP_JUL.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,July,Spain,1961-1990,v2.5,2026-10-29T16:13:30.398Z,76,1950,2025,0,0,0,29.724,34.103,37.879,1.485
+txx_ESP_JUN.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,June,Spain,1961-1990,v2.5,2026-10-29T16:11:03.327Z,76,1950,2025,0,0,0,25.089,31.32,36.031,2.328
+txx_FRA_AUG.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,August,France,1961-1990,v2.5,2026-10-29T16:16:55.748Z,76,1950,2025,0,0,0,24.927,30.051,36.082,2.311
+txx_FRA_JUL.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,July,France,1961-1990,v2.5,2026-10-29T16:13:49.587Z,76,1950,2025,0,0,0,26.439,30.345,36.208,2.172
+txx_FRA_JUN.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,June,France,1961-1990,v2.5,2026-10-29T16:11:58.192Z,76,1950,2025,0,0,0,23.874,28.159,35.054,2.535
+txx_GER_AUG.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,August,Germany,1961-1990,v2.5,2026-10-29T16:17:12.777Z,76,1950,2025,0,0,0,24.134,28.842,33.756,2.285
+txx_GER_JUL.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,July,Germany,1961-1990,v2.5,2026-10-29T16:14:04.015Z,76,1950,2025,0,0,0,22.104,29.148,34.329,2.618
+txx_GER_JUN.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,June,Germany,1961-1990,v2.5,2026-10-29T16:12:19.476Z,76,1950,2025,0,0,0,22.93,27.699,33.6,2.135
+txx_SWE_AUG.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,August,Sweden,1961-1990,v2.5,2026-10-29T16:17:27.021Z,76,1950,2025,0,0,0,17.415,22.663,26.93,2.225
+txx_SWE_JUL.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,July,Sweden,1961-1990,v2.5,2026-10-29T16:14:19.172Z,76,1950,2025,0,0,0,19.461,24.416,29.045,2.07
+txx_SWE_JUN.csv,TXx,Maximum of daily maximum temperature,°C,ERA5-Land,June,Sweden,1961-1990,v2.5,2026-10-29T16:12:36.170Z,76,1950,2025,0,0,0,17.203,23.079,27.361,2.273

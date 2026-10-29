@@ -21,7 +21,7 @@ python scripts/check_raw.py
 | Access / download date | 2026-10-29 (file timestamps 2026-10-29T16:11:03.327Z to 2026-10-29T16:20:22.078Z) |
 | Countries | Spain (ESP), France (FRA), Germany (GER), Sweden (SWE) |
 | Spatial aggregation | Country average of grid-cell values ("Mean of ... series for <country>"), cosine-latitude weighted on the regular lat-lon grid; land cells only (ERA5-Land covers land only) |
-| Documentation | C3S Atlas User Guide, https://confluence.ecmwf.int/x/aZZ-Fw; C3S Atlas dataset documentation, https://confluence.ecmwf.int/x/UZZ-Fw; Atlas "i" information panel for SPEI-6 / ERA5-Land (all consulted 2026-10-29) |
+| Documentation | C3S Atlas User Guide, https://confluence.ecmwf.int/x/aZZ-Fw; C3S Atlas dataset documentation, https://confluence.ecmwf.int/x/UZZ-Fw; Atlas "i" information panel for SPEI-6 / ERA5-Land, verbatim copy in `data/atlas_info_spei6.txt` (all consulted 2026-10-29) |
 | Coverage | 1950-2025, 76 years per file, no missing values, no duplicated years, no gaps |
 
 ### Raw file format

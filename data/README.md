@@ -19,7 +19,8 @@ python scripts/check_raw.py
 | Underlying dataset | ERA5-Land (identical across all 16 files) |
 | Access / download date | 2026-10-29 (file timestamps 2026-10-29T16:11:03.327Z to 2026-10-29T16:20:22.078Z) |
 | Countries | Spain (ESP), France (FRA), Germany (GER), Sweden (SWE) |
-| Spatial aggregation | Country average of grid-cell values ("Mean of ... series for <country>") |
+| Spatial aggregation | Country average of grid-cell values ("Mean of ... series for <country>"), cosine-latitude weighted on the regular lat-lon grid; land cells only (ERA5-Land covers land only) |
+| Documentation | C3S Atlas User Guide, https://confluence.ecmwf.int/x/aZZ-Fw (consulted 2026-10-29) |
 | Coverage | 1950-2025, 76 years per file, no missing values, no duplicated years, no gaps |
 
 ### Raw file format
@@ -48,7 +49,7 @@ Atlas chart. It does not truncate the data: every file covers 1950-2025.
   one file per month and country (12 files).
 - **Coverage**: 1950-2025, 76 values per file.
 - **Country average**: the Atlas averages the grid-cell TXx values over the
-  country. The result is a country mean of local monthly maxima, not the
+  country, with cosine-latitude weights, over land cells only. The result is a country mean of local monthly maxima, not the
   hottest grid cell.
 
 ## SPEI-6
@@ -56,9 +57,10 @@ Atlas chart. It does not truncate the data: every file covers 1950-2025.
 - **Definition**: Standardised Precipitation-Evapotranspiration Index on a
   6-month accumulation window: precipitation minus potential
   evapotranspiration (PET), accumulated over 6 months and standardised
-  against a reference period (1971-2010 according to the C3S Atlas
-  documentation). Expressed in standardised units; negative = drier than
-  the reference, positive = wetter.
+  against the reference period 1971-2005 (C3S Atlas User Guide, v2.5).
+  Expressed in standardised units; negative = drier than the reference,
+  positive = wetter.
+- **PET method**: Hargreaves formulation (used by the Atlas since v2.0).
 - **Units**: dimensionless (the Atlas labels it "fraction of unity").
 - **Temporal resolution**: monthly; we downloaded September only (4 files).
   The September value covers April-September.
@@ -93,15 +95,24 @@ Output of `scripts/check_raw.py` (`data/raw_check.csv`). Values rounded to
 | txx_SWE_JUL.csv | TXx | Sweden | July | °C | 76 | 1950 | 2025 | 0 | 0 | 19.461 | 24.416 | 29.045 | 2.070 | 2026-10-29T16:14:19.172Z |
 | txx_SWE_JUN.csv | TXx | Sweden | June | °C | 76 | 1950 | 2025 | 0 | 0 | 17.203 | 23.079 | 27.361 | 2.273 | 2026-10-29T16:12:36.170Z |
 
+## Known data limitations (from the C3S Atlas User Guide)
+
+Source: C3S Atlas User Guide, https://confluence.ecmwf.int/x/aZZ-Fw
+(consulted 2026-10-29).
+
+- **Border cells**: the guide does not document how grid cells that straddle
+  a national border are treated in the country average.
+- **ERA5-Land before 1978**: the Atlas disables ERA5-Land trends before 1978
+  because of a potential inconsistency in the ERA5 forcing used for that
+  period. Our sample starts in 1950, so part of any early-vs-recent
+  difference could be a data artefact rather than a climate signal.
+
 ## TO VERIFY
 
-Not confirmed from the files themselves; check against the C3S Atlas
-documentation before final submission.
+Remaining open points in `paper/02_data.md` (marked [VERIFY] there).
 
-- [ ] Exact country aggregation method: area-weighted (cos-latitude) or
-      simple mean of grid cells? Land-only cells? How are border cells
-      treated?
-- [ ] PET method used for SPEI in Atlas v2.5 (e.g. Penman-Monteith,
-      Hargreaves, Thornthwaite).
-- [ ] SPEI reference period in Atlas v2.5 (1971-2010 per the documentation
-      we have seen; confirm it applies to v2.5 and to ERA5-Land).
+- [ ] ERA5-Land horizontal resolution (about 9 km).
+- [ ] Lower density of the observing network in the early decades of the
+      sample.
+- [ ] Closing sentence on tail inference: align with the methods section
+      (Section 3).

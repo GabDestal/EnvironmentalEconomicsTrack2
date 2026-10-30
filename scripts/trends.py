@@ -13,9 +13,9 @@ Quantile regression uses the pooled observations (three per year for TXx).
 Standard errors and intervals come from the year-block bootstrap, because
 statsmodels' analytical errors assume independent rows. Each draw re-fits
 every tau on the same resampled years, so the difference between a tail
-slope and the median slope gets its own interval. series_nonconverged_boot_fits
-counts, over all taus and draws of a series, the fits that hit the iteration
-limit (their slope is an approximation).
+slope and the median slope gets its own interval. series_nonconverged_fits
+counts, over all taus of a series (point estimates and bootstrap draws), the
+fits that hit the iteration limit (their slope is an approximation).
 """
 
 import warnings
@@ -32,6 +32,9 @@ from load_data import iter_series
 
 MONTH_ORDER = ("Jun", "Jul", "Aug", "Sep")
 QR_MAX_ITER = 5000
+# At statsmodels' default p_tol (1e-6) the solver stops so early that float noise
+# of 1e-14, as between machines, can move a slope by 2e-3.
+QR_P_TOL = 1e-8
 
 
 def decades_since_start(years: np.ndarray) -> np.ndarray:
@@ -84,7 +87,7 @@ def ols_trend_table(data: pd.DataFrame, ci_level: float) -> pd.DataFrame:
 
 def _qr_fit(X: np.ndarray, y: np.ndarray, taus: np.ndarray) -> list:
     model = QuantReg(y, X)
-    return [model.fit(q=tau, max_iter=QR_MAX_ITER) for tau in taus]
+    return [model.fit(q=tau, max_iter=QR_MAX_ITER, p_tol=QR_P_TOL) for tau in taus]
 
 
 def quantile_trend_table(
@@ -101,18 +104,18 @@ def quantile_trend_table(
         y = series["analysis_value"].to_numpy()
         X = sm.add_constant(decades_since_start(years))
 
-        fits = _qr_fit(X, y, taus)
-        slopes = np.array([f.params[1] for f in fits])
-        n_beyond = [int((f.resid > 0).sum() if tau >= 0.5 else (f.resid < 0).sum()) for f, tau in zip(fits, taus)]
-
         rng = np.random.default_rng(seed)
         with warnings.catch_warnings(record=True) as caught:
             warnings.simplefilter("always", IterationLimitWarning)
+            fits = _qr_fit(X, y, taus)
             boot = np.array([
                 [f.params[1] for f in _qr_fit(X[idx], y[idx], taus)]
                 for idx in year_bootstrap(years, n_boot, rng)
             ])
-        n_warnings = sum(issubclass(w.category, IterationLimitWarning) for w in caught)
+        n_nonconverged = sum(issubclass(w.category, IterationLimitWarning) for w in caught)
+
+        slopes = np.array([f.params[1] for f in fits])
+        n_beyond = [int((f.resid > 0).sum() if tau >= 0.5 else (f.resid < 0).sum()) for f, tau in zip(fits, taus)]
 
         se = boot.std(axis=0, ddof=1)
         ci_lo, ci_hi = percentile_ci(boot, ci_level)
@@ -124,6 +127,6 @@ def quantile_trend_table(
                 "slope_per_decade": slopes[j], "boot_se": se[j], "ci_lo": ci_lo[j], "ci_hi": ci_hi[j],
                 "minus_median": slopes[j] - slopes[median],
                 "minus_median_lo": diff_lo[j], "minus_median_hi": diff_hi[j],
-                "n_boot": n_boot, "series_nonconverged_boot_fits": n_warnings,
+                "n_boot": n_boot, "series_nonconverged_fits": n_nonconverged,
             })
     return pd.DataFrame(rows)

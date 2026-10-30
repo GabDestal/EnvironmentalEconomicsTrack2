@@ -3,7 +3,8 @@ import pandas as pd
 import pytest
 import statsmodels.api as sm
 
-from trends import decades_since_start, newey_west_lags, ols_trend, ols_trend_table, quantile_trend_table
+from load_data import load_analysis_data
+from trends import _qr_fit, decades_since_start, newey_west_lags, ols_trend, ols_trend_table, quantile_trend_table
 
 YEARS = np.arange(1950, 2026)
 
@@ -55,6 +56,20 @@ def test_quantile_slopes_fan_out_when_spread_grows():
     assert table.loc[0.5, "minus_median"] == 0
     assert table.loc[0.95, "n_beyond_line"] == pytest.approx(0.05 * 228, abs=4)
     assert (table["ci_lo"] <= table["ci_hi"]).all()
+
+
+def test_quantile_slope_is_stable_under_float_noise():
+    # TXx ESP at tau = 0.25 is the fit most sensitive to solver tolerance.
+    txx = load_analysis_data().query("indicator == 'TXx' and country == 'ESP'")
+    y = txx["analysis_value"].to_numpy()
+    X = sm.add_constant(decades_since_start(txx["year"].to_numpy()))
+    taus = np.array([0.25])
+
+    rng = np.random.default_rng(1)
+    base = _qr_fit(X, y, taus)[0].params[1]
+    for _ in range(200):
+        noisy = y * (1 + 1e-14 * rng.standard_normal(y.size))
+        assert _qr_fit(X, noisy, taus)[0].params[1] == pytest.approx(base, abs=1e-6)
 
 
 def test_quantile_trend_table_requires_the_median():

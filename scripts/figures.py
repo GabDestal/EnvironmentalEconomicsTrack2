@@ -136,6 +136,35 @@ def fig3_shift_vs_shape(shift: pd.DataFrame) -> None:
     save(fig, "fig3_txx_shift_vs_shape")
 
 
+# Figure 4 ---------------------------------------------------------------
+def fig4_thresholds(exc: pd.DataFrame) -> None:
+    e = exc[exc["indicator"] == "TXx"]
+    fig, ax = grid("Figure 4. How often are early-period extremes exceeded? Observed vs pure shift",
+                   f"Share of June–August values above each threshold, an early-period ({EARLY[0]}–{EARLY[1]}) "
+                   f"percentile of TXx. Pure shift: early values moved up by the change in the mean, with "
+                   f"no change in shape. Labels: recent count out of 90. Log scale.")
+    for c, a in ax.items():
+        d = e[e["country"] == c].sort_values("threshold_pct")
+        x = np.arange(len(d))
+        a.plot(x, 100 * d["rate_early"], "o--", color=C_EARLY, mfc="white", lw=1.2, ms=6, label=EARLY_LBL)
+        a.plot(x, 100 * d["rate_shift_only"], "s:", color=C_MUTED, lw=1.2, ms=5, label="Pure shift (benchmark)")
+        a.plot(x, 100 * d["rate_recent"], "o-", color=C_RECENT, lw=1.6, ms=6, label=RECENT_LBL)
+        for xi, (_, r) in zip(x, d.iterrows()):
+            a.annotate(f"{r['k_recent']}", (xi, 100 * r["rate_recent"]), textcoords="offset points",
+                       xytext=(0, 7), ha="center", va="bottom", fontsize=7, color=C_RECENT)
+        a.set_yscale("log")
+        a.set_ylim(0.5, 120)
+        a.set_yticks([1, 2, 5, 10, 25, 50, 100], ["1", "2", "5", "10", "25", "50", "100"])
+        a.set_xticks(x, [f"P{p}" for p in d["threshold_pct"]])
+        a.set_title(NAMES[c], loc="left")
+    for c in ("ESP", "GER"):
+        ax[c].set_ylabel("Values above threshold (%)")
+    for c in ("GER", "SWE"):
+        ax[c].set_xlabel("Threshold: early-period percentile")
+    fig_legend(fig, ax["ESP"])
+    save(fig, "fig4_txx_thresholds")
+
+
 def main() -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     data = load_analysis_data()
@@ -144,6 +173,7 @@ def main() -> None:
     fig1_timeseries(data)
     fig2_distributions(data)
     fig3_shift_vs_shape(shift)
+    fig4_thresholds(exc)
 
 
 if __name__ == "__main__":

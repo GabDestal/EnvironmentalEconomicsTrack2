@@ -52,3 +52,4 @@ def test_summary_markdown_has_one_row_per_indicator_country_period(data):
     md = summary_markdown(summary_table(data)).strip().splitlines()
     assert len(md) == 2 + 16
     assert f"{EARLY[0]}-{EARLY[1]}" in md[2]
+    assert "-0.00" not in "\n".join(md)

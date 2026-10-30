@@ -11,11 +11,12 @@ Output columns:
 """
 
 import re
+from collections.abc import Iterator
 from pathlib import Path
 
 import pandas as pd
 
-from config import EARLY, RAW_DIR, RECENT
+from config import COUNTRIES, EARLY, INDICATORS, RAW_DIR, RECENT
 
 FILENAME_RE = re.compile(r"^(?P<prefix>txx|spei6)_(?P<country>[A-Z]{3})_(?P<month>[A-Z]{3})\.csv$")
 PREFIX_TO_INDICATOR = {"txx": "TXx", "spei6": "SPEI-6"}
@@ -73,3 +74,12 @@ def build_analysis_data(raw: pd.DataFrame, early: tuple[int, int], recent: tuple
 def load_analysis_data(raw_dir: Path = RAW_DIR) -> pd.DataFrame:
     """Entry point for other scripts (figures, econometrics): the tidy analysis table."""
     return build_analysis_data(load_raw(raw_dir), EARLY, RECENT)
+
+
+def iter_series(data: pd.DataFrame) -> Iterator[tuple[str, str, pd.DataFrame]]:
+    """Yield (indicator, country, rows) in the fixed order of config.py, skipping absent ones."""
+    for indicator in INDICATORS:
+        for country in COUNTRIES:
+            rows = data[(data["indicator"] == indicator) & (data["country"] == country)]
+            if not rows.empty:
+                yield indicator, country, rows

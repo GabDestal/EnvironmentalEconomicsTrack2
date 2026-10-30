@@ -15,6 +15,7 @@ Tested with Python 3.13.9. Run from the repository root:
 pip install -r requirements.txt
 python scripts/check_raw.py   # validates data/raw/, writes data/raw_check.csv
 python scripts/analysis.py    # every result -> outputs/ (up to 5 minutes, depending on the machine)
+python scripts/figures.py     # section 4 figures -> outputs/figures/
 python -m pytest              # tests
 ```
 
@@ -39,6 +40,7 @@ result.
 | `scripts/trends.py` | OLS trends with HAC errors, quantile regression |
 | `scripts/bootstrap.py` | year-block bootstrap used for every confidence interval |
 | `scripts/analysis.py` | entry point: writes everything in `outputs/` |
+| `scripts/figures.py` | section 4 figures from `outputs/`, written to `outputs/figures/` |
 
 Other scripts (e.g. figures) should reuse the same data and settings:
 

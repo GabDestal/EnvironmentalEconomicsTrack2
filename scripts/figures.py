@@ -105,6 +105,37 @@ def fig2_distributions(data: pd.DataFrame) -> None:
     save(fig, "fig2_txx_distributions")
 
 
+# Figure 3 ---------------------------------------------------------------
+def fig3_shift_vs_shape(shift: pd.DataFrame) -> None:
+    s = shift[shift["indicator"] == "TXx"]
+    fig, ax = grid("Figure 3. Shift or change in shape? Change in TXx percentiles vs change in the mean",
+                   f"Change from {EARLY[0]}–{EARLY[1]} to {RECENT[0]}–{RECENT[1]}, °C. Dots: change in each "
+                   f"percentile; band: change in the mean. Bars and band: 95% intervals, bootstrap resampling "
+                   f"whole summers. Under a pure shift every dot would lie on the dashed line, up to sampling noise. n: recent values above the "
+                   f"recent percentile (distinct summers).")
+    for c, a in ax.items():
+        d = s[s["country"] == c].sort_values("tail_pct")
+        m = d.iloc[0]
+        x = np.arange(len(d))
+        a.axhspan(m["d_mean_lo"], m["d_mean_hi"], color=C_EARLY, alpha=0.15, lw=0)
+        a.axhline(m["d_mean"], color=C_EARLY, lw=1.4, ls="--", label="Change in the mean (95% band)")
+        a.errorbar(x, d["d_q"], yerr=[d["d_q"] - d["d_q_lo"], d["d_q_hi"] - d["d_q"]], fmt="o",
+                   color=C_RECENT, ms=6, capsize=3, lw=1.2, label="Change in percentile (95% interval)")
+        for xi, (_, r) in zip(x, d.iterrows()):
+            a.annotate(f"n={r['n_beyond_recent']} ({r['years_beyond_recent']})", (xi, r["d_q_hi"]),
+                       textcoords="offset points", xytext=(0, 4), ha="center", fontsize=7, color=C_MUTED)
+        a.set_xticks(x, [f"P{p}" for p in d["tail_pct"]])
+        a.axhline(0, color=C_MUTED, lw=0.8)
+        a.set_title(f"{NAMES[c]}  (mean {m['d_mean']:+.2f} °C)", loc="left")
+        a.set_xlim(-0.5, len(d) - 0.5)
+    for c in ("ESP", "GER"):
+        ax[c].set_ylabel("Change, recent − early (°C)")
+    for c in ("GER", "SWE"):
+        ax[c].set_xlabel("Percentile of the TXx distribution")
+    fig_legend(fig, ax["ESP"])
+    save(fig, "fig3_txx_shift_vs_shape")
+
+
 def main() -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     data = load_analysis_data()
@@ -112,6 +143,7 @@ def main() -> None:
     exc = pd.read_csv(OUT_DIR / "exceedance.csv")
     fig1_timeseries(data)
     fig2_distributions(data)
+    fig3_shift_vs_shape(shift)
 
 
 if __name__ == "__main__":

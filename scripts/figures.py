@@ -56,11 +56,38 @@ def save(fig, name: str) -> None:
     print(f"wrote outputs/figures/{name}.png")
 
 
+# Figure 1 ---------------------------------------------------------------
+def fig1_timeseries(data: pd.DataFrame) -> None:
+    txx = data[data["indicator"] == "TXx"]
+    fig, ax = grid("Figure 1. Summer maximum temperature (TXx) anomaly, 1950–2025",
+                   f"Dots: June, July and August values; line: their yearly mean. Anomaly in °C "
+                   f"from the {EARLY[0]}–{EARLY[1]} mean of the same month. Shaded: the two compared "
+                   f"periods. Dashed line: {ROBUSTNESS_START}, before which ERA5-Land may be less consistent.")
+    for c, a in ax.items():
+        d = txx[txx["country"] == c]
+        a.axvspan(EARLY[0] - 0.5, EARLY[1] + 0.5, color=C_EARLY, alpha=0.08, lw=0)
+        a.axvspan(RECENT[0] - 0.5, RECENT[1] + 0.5, color=C_RECENT, alpha=0.08, lw=0)
+        a.axvline(ROBUSTNESS_START, color=C_MUTED, ls="--", lw=0.8)
+        a.axhline(0, color=C_MUTED, lw=0.8)
+        a.scatter(d["year"], d["analysis_value"], s=6, color=C_MUTED, alpha=0.45, lw=0)
+        yearly = d.groupby("year")["analysis_value"].mean()
+        a.plot(yearly.index, yearly.values, color=C_INK, lw=1.4)
+        a.set_title(NAMES[c], loc="left")
+    for c in ("ESP", "GER"):
+        ax[c].set_ylabel("TXx anomaly (°C)")
+    ax["ESP"].text(np.mean(EARLY), 0.97, "early", transform=ax["ESP"].get_xaxis_transform(),
+                   ha="center", va="top", color=C_EARLY, fontsize=8)
+    ax["ESP"].text(np.mean(RECENT), 0.97, "recent", transform=ax["ESP"].get_xaxis_transform(),
+                   ha="center", va="top", color=C_RECENT, fontsize=8)
+    save(fig, "fig1_txx_timeseries")
+
+
 def main() -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     data = load_analysis_data()
     shift = pd.read_csv(OUT_DIR / "shift_shape.csv")
     exc = pd.read_csv(OUT_DIR / "exceedance.csv")
+    fig1_timeseries(data)
 
 
 if __name__ == "__main__":

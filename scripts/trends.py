@@ -13,7 +13,9 @@ Quantile regression uses the pooled observations (three per year for TXx).
 Standard errors and intervals come from the year-block bootstrap, because
 statsmodels' analytical errors assume independent rows. Each draw re-fits
 every tau on the same resampled years, so the difference between a tail
-slope and the median slope gets its own interval.
+slope and the median slope gets its own interval. series_nonconverged_boot_fits
+counts, over all taus and draws of a series, the fits that hit the iteration
+limit (their slope is an approximation).
 """
 
 import warnings
@@ -122,6 +124,6 @@ def quantile_trend_table(
                 "slope_per_decade": slopes[j], "boot_se": se[j], "ci_lo": ci_lo[j], "ci_hi": ci_hi[j],
                 "minus_median": slopes[j] - slopes[median],
                 "minus_median_lo": diff_lo[j], "minus_median_hi": diff_hi[j],
-                "n_boot": n_boot, "boot_iteration_warnings": n_warnings,
+                "n_boot": n_boot, "series_nonconverged_boot_fits": n_warnings,
             })
     return pd.DataFrame(rows)

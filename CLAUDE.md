@@ -22,6 +22,11 @@ frequency and intensity, and test how much the answer depends on the threshold.
 - `data/README.md` — data log (sources, definitions, limitations). Read it before touching data.
 - `data/atlas_info_spei6.txt` — verbatim Atlas definition of SPEI-6 (source of the reference period).
 - `scripts/check_raw.py` — validates raw files; run it after any data change.
+- `scripts/config.py` — periods, thresholds, quantiles, bootstrap settings. Import from here.
+- `scripts/analysis.py` — the entry point: `python scripts/analysis.py` writes every result
+  to `outputs/`. Other scripts get the data with `load_data.load_analysis_data()`.
+- `outputs/` — generated; never edit by hand. Column glossary in `README.md`.
+- `tests/` — `python -m pytest`; run after any change to `scripts/`.
 - `paper/0X_*.md` — one file per paper section.
 
 ## Data (do not re-derive these facts; they are documented)
@@ -35,8 +40,8 @@ frequency and intensity, and test how much the answer depends on the threshold.
 - Load with: `pd.read_csv(path, comment="#")`, then rename columns to `["year", "value"]`.
 
 ## Method conventions
-- Periods: **TBD by the group** (proposal: 1961–1990 vs 1996–2025). Define them in ONE
-  place in the code and import everywhere.
+- Periods: **TBD by the group** (proposal: 1961–1990 vs 1996–2025, currently set in
+  `scripts/config.py`). Define them in ONE place in the code and import everywhere.
 - Thresholds: percentiles computed on the **early** period, applied to both periods.
 - TXx extremes = upper tail (P75/P90/P95/P99). SPEI extremes = **lower** tail (P25/P10/P5/P1).
 - Always report the number of observations behind each tail statistic.

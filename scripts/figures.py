@@ -165,6 +165,40 @@ def fig4_thresholds(exc: pd.DataFrame) -> None:
     save(fig, "fig4_txx_thresholds")
 
 
+# Figure 5 ---------------------------------------------------------------
+def fig5_spei(data: pd.DataFrame, shift: pd.DataFrame) -> None:
+    sp = data[(data["indicator"] == "SPEI-6") & data["period"].notna()]
+    hl = shift[(shift["indicator"] == "SPEI-6") & shift["headline"]].set_index("country")
+    rng = np.random.default_rng(0)
+    fig, a = plt.subplots(figsize=(8, 3.6))
+    fig.suptitle("Figure 5. Drought: September SPEI-6, early vs recent period", x=0.01, ha="left",
+                 fontsize=11, fontweight="bold")
+    for i, c in enumerate(COUNTRIES):
+        for per, col, off, mk in (("early", C_EARLY, -0.18, "o"), ("recent", C_RECENT, 0.18, "o")):
+            v = sp[(sp["country"] == c) & (sp["period"] == per)]["analysis_value"]
+            xs = i + off + rng.uniform(-0.07, 0.07, len(v))
+            a.scatter(xs, v, s=14, color=col, alpha=0.55, lw=0,
+                      label=(EARLY_LBL if per == "early" else RECENT_LBL) if i == 0 else None)
+            a.hlines(v.mean(), i + off - 0.13, i + off + 0.13, color=col, lw=2.2)
+        r = hl.loc[c]
+        a.text(i, -3.85,
+               f"Δ mean {r['d_mean']:+.2f}\n[{r['d_mean_lo']:+.2f}, {r['d_mean_hi']:+.2f}]",
+               ha="center", va="bottom", fontsize=7.5, color=C_INK)
+    a.axhline(0, color=C_MUTED, lw=0.8)
+    a.set_ylim(-3.9, 2.6)
+    a.set_xticks(range(len(COUNTRIES)), [NAMES[c] for c in COUNTRIES])
+    a.set_ylabel("SPEI-6 (dimensionless; < 0 = drier)")
+    a.legend(loc="upper right", fontsize=8, ncol=2)
+    fig.text(0.01, -0.01,
+             f"Each dot is one year's September SPEI-6 (April–September water balance), 30 per period. "
+             f"Bars: period means. Δ mean: recent − early with 95% bootstrap interval. Reference climate "
+             f"of the index: 1971–2005. {SOURCE}", ha="left", va="top", fontsize=7.5, color=C_MUTED, wrap=True)
+    fig.tight_layout(rect=(0, 0.02, 1, 0.95))
+    fig.savefig(FIG_DIR / "fig5_spei_drought.png")
+    plt.close(fig)
+    print("wrote outputs/figures/fig5_spei_drought.png")
+
+
 def main() -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     data = load_analysis_data()
@@ -174,6 +208,7 @@ def main() -> None:
     fig2_distributions(data)
     fig3_shift_vs_shape(shift)
     fig4_thresholds(exc)
+    fig5_spei(data, shift)
 
 
 if __name__ == "__main__":

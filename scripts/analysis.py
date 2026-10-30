@@ -24,12 +24,21 @@ from load_data import load_analysis_data
 from tails import exceedance_table, shift_shape_table
 from trends import ols_trend_table, quantile_trend_table
 
-DERIVED_FLOAT_FORMAT = "%.6g"
+# Float differences between machines stay far below these precisions, so the
+# written files should match. The tidy data keeps enough digits to hold raw values.
+DERIVED_DECIMALS = 4
+TIDY_DECIMALS = 10
 
 
-def write_csv(df: pd.DataFrame, name: str, float_format: str | None = DERIVED_FLOAT_FORMAT) -> None:
+def round_floats(df: pd.DataFrame, decimals: int) -> pd.DataFrame:
+    """Round float columns; adding 0.0 turns -0.0 (noise around zero) into 0.0."""
+    floats = df.select_dtypes("float").columns
+    return df.assign(**{col: df[col].round(decimals) + 0.0 for col in floats})
+
+
+def write_csv(df: pd.DataFrame, name: str, decimals: int = DERIVED_DECIMALS) -> None:
     path = OUT_DIR / f"{name}.csv"
-    df.to_csv(path, index=False, float_format=float_format)
+    round_floats(df, decimals).to_csv(path, index=False)
     print(f"  {path.relative_to(ROOT)} ({len(df)} rows)")
 
 
@@ -57,11 +66,11 @@ def main() -> None:
     shift_shape = shift_shape_table(data, N_BOOT_SHIFT, SEED, CI_LEVEL)
     exceedance = exceedance_table(data)
     ols = ols_trend_table(data, CI_LEVEL)
-    print(f"Quantile regression bootstrap ({N_BOOT_QUANTREG} draws per series), about a minute...")
+    print(f"Quantile regression bootstrap ({N_BOOT_QUANTREG} draws per series), a few minutes...")
     quantile = quantile_trend_table(data, QUANTILE_TAUS, N_BOOT_QUANTREG, SEED, CI_LEVEL)
 
     print("Written:")
-    write_csv(data, "analysis_data", float_format=None)
+    write_csv(data, "analysis_data", decimals=TIDY_DECIMALS)
     write_csv(summary, "summary_stats")
     write_csv(baseline, "txx_baseline")
     write_csv(shift_shape, "shift_shape")

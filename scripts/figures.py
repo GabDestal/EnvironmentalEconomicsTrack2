@@ -82,12 +82,36 @@ def fig1_timeseries(data: pd.DataFrame) -> None:
     save(fig, "fig1_txx_timeseries")
 
 
+# Figure 2 ---------------------------------------------------------------
+def fig2_distributions(data: pd.DataFrame) -> None:
+    txx = data[(data["indicator"] == "TXx") & data["period"].notna()]
+    bins = np.arange(np.floor(txx["analysis_value"].min()), np.ceil(txx["analysis_value"].max()) + 1, 1.0)
+    fig, ax = grid("Figure 2. Distribution of summer TXx anomalies, early vs recent period",
+                   f"Share of the 90 June–August values per period falling in each 1 °C bin. "
+                   f"Vertical lines: period means. Anomaly from the {EARLY[0]}–{EARLY[1]} mean of the same month.")
+    for c, a in ax.items():
+        for per, col, lbl, ls in (("early", C_EARLY, EARLY_LBL, "--"), ("recent", C_RECENT, RECENT_LBL, "-")):
+            v = txx[(txx["country"] == c) & (txx["period"] == per)]["analysis_value"]
+            w = np.full(len(v), 100 / len(v))
+            a.hist(v, bins=bins, weights=w, histtype="stepfilled", color=col, alpha=0.18)
+            a.hist(v, bins=bins, weights=w, histtype="step", color=col, lw=1.4, ls=ls, label=lbl)
+            a.axvline(v.mean(), color=col, lw=1.4, ls=ls)
+        a.set_title(NAMES[c], loc="left")
+    for c in ("ESP", "GER"):
+        ax[c].set_ylabel("Share of observations (%)")
+    for c in ("GER", "SWE"):
+        ax[c].set_xlabel("TXx anomaly (°C)")
+    fig_legend(fig, ax["ESP"])
+    save(fig, "fig2_txx_distributions")
+
+
 def main() -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     data = load_analysis_data()
     shift = pd.read_csv(OUT_DIR / "shift_shape.csv")
     exc = pd.read_csv(OUT_DIR / "exceedance.csv")
     fig1_timeseries(data)
+    fig2_distributions(data)
 
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@ Tested with Python 3.13.9. Run from the repository root:
 ```bash
 pip install -r requirements.txt
 python scripts/check_raw.py   # validates data/raw/, writes data/raw_check.csv
-python scripts/analysis.py    # every result -> outputs/ (1.5 to 4 minutes, depending on the machine)
+python scripts/analysis.py    # every result -> outputs/ (up to 5 minutes, depending on the machine)
 python -m pytest              # tests
 ```
 
@@ -22,10 +22,11 @@ Everything starts from the files in `data/raw/` exactly as downloaded; there is 
 step. The periods, thresholds and bootstrap settings live only in `scripts/config.py`:
 change them there and re-run `analysis.py`.
 
-Bootstraps use a fixed seed, so a re-run on the same machine gives identical files. Results
-should also match across machines at the precision written (4 decimals for derived tables):
-this was tested by adding float noise of 1e-14 to the data, not on every platform, so treat a
-difference in the last decimal on another machine as noise, not as a different result.
+Bootstraps use a fixed seed, so a re-run gives identical files at the precision written
+(4 decimals for derived tables). This was checked on two machines (fresh clone, empty
+`git diff outputs/`) and by adding float noise of 1e-14 to the data, not on every platform,
+so treat a difference in the last decimal on another machine as noise, not as a different
+result.
 
 ## Code
 

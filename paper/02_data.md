@@ -93,8 +93,9 @@ thresholds taken from each country's own distribution. Finally, the tails
 contain few observations by construction. With 76 years per series, or 90
 observations per 30-year period for pooled TXx, the 90th or 95th
 percentile within a period is estimated from only a handful of values.
-Estimates of tail shape are thus imprecise, and the inference in Section 3
-accounts for this [VERIFY: align with the methods section].
+Estimates of tail shape are thus imprecise. Section 5 reports bootstrap
+intervals that keep the three months of a summer together when resampling;
+these do not account for dependence across years.
 
 ## References
 

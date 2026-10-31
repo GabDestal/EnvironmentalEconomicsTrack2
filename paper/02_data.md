@@ -69,7 +69,9 @@ affects the start of our sample: the Atlas disables ERA5-Land trends
 before 1978 because of a potential inconsistency in the ERA5 forcing used
 for that period (C3S, 2024a). Our early period overlaps these years, so
 part of any difference between the early and recent distributions could
-be a data artefact rather than a change in climate. Second, averaging over
+be a data artefact rather than a change in climate.
+
+Second, averaging over
 a country smooths local extremes. A heatwave or drought that affects only
 part of the territory is diluted in the national mean, so our series
 understate the severity of the most extreme local events, and the
@@ -77,11 +79,15 @@ smoothing is likely to be stronger for large or climatically diverse
 countries such as France and Spain. In addition, the Atlas documentation
 does not state how grid cells that straddle a national border are
 treated (C3S, 2024a), so the exact spatial footprint of each country
-average is not known. Third, SPEI depends on modelling choices: the
+average is not known.
+
+Third, SPEI depends on modelling choices: the
 reference period sets the zero of the scale, and the PET formulation
 determines how strongly rising temperatures translate into apparent
 drying. A different reference period or PET method could shift the series
-or change their trends. Fourth, standardisation is done per grid cell, and
+or change their trends.
+
+Fourth, standardisation is done per grid cell, and
 averaging standardised values across cells reduces their variance. The
 country-level SPEI-6 series have standard deviations between 0.754 and
 0.902, all below the unit variance of a cell-level index, and their
@@ -89,7 +95,9 @@ country-level SPEI-6 series have standard deviations between 0.754 and
 Atlas's fixed threshold of -1.5 for "severe" drought is rarely crossed at
 the country level, and a count of exceedances of that threshold would
 carry little information. We therefore define extremes with percentile
-thresholds taken from each country's own distribution. Finally, the tails
+thresholds taken from each country's own distribution.
+
+Finally, the tails
 contain few observations by construction. With 76 years per series, or 90
 observations per 30-year period for pooled TXx, the 90th or 95th
 percentile within a period is estimated from only a handful of values.

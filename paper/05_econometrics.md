@@ -5,10 +5,15 @@
 We set each country's thresholds on 1961-1990 and apply the same values to
 1996-2025. Frequency is the share of observations above the TXx threshold or
 below the SPEI-6 threshold, not a count of distinct heatwaves or drought
-episodes. Let delta = mean_recent - mean_early. The shift benchmark adds delta
-to every early observation and recounts exceedances. It preserves the early
-distribution's shape and uses the observed mean change; it is a descriptive
-benchmark, not an independent forecast.
+episodes. Let the mean shift be
+
+$$
+\Delta = \bar{y}_{R} - \bar{y}_{E}.
+$$
+
+The shift benchmark adds delta to every early observation and recounts
+exceedances. It preserves the early distribution's shape and uses the observed
+mean change; it is a descriptive benchmark, not an independent forecast.
 
 **Table 3. Threshold sensitivity: early count / recent count / shift-benchmark
 count.**
@@ -49,16 +54,22 @@ the line, making frequency ratios particularly unstable.
 
 ## 5.2. Tail intensity relative to the mean
 
-We measure departure from a shift by S_p = (Q_recent,p - Q_early,p) - delta,
-where Q_p is percentile p. A positive S_p means extra movement toward heat for
-TXx; a negative value means extra movement toward dryness for SPEI-6. For TXx
-at P95, S_p is 1.18 °C in Spain, 0.75 °C in France, 0.55 °C in Germany and
-0.37 °C in Sweden. Their 95% bootstrap intervals are [-0.40, 1.72], [-0.54,
-1.70], [-0.31, 1.47] and [-0.84, 1.03] °C. All include zero, as do the
-corresponding intervals at the other thresholds. This is limited evidence
-about tail departures, not proof of identical shapes. France and Germany
-nevertheless show wider pooled distributions: their SD changes are 0.52 °C
-[0.07, 0.93] and 0.59 °C [0.18, 0.98].
+We measure departure from a shift by
+
+$$
+S_p = (Q_{R,p} - Q_{E,p}) - \Delta,
+$$
+
+where Q is the percentile at p and E and R denote the early and recent
+periods. A positive S_p means extra movement toward heat for TXx; a negative
+value means extra movement toward dryness for SPEI-6. For TXx at P95, S_p is
+1.18 °C in Spain, 0.75 °C in France, 0.55 °C in Germany and 0.37 °C in Sweden.
+Their 95% bootstrap intervals are [-0.40, 1.72], [-0.54, 1.70], [-0.31, 1.47]
+and [-0.84, 1.03] °C. All include zero, as do the corresponding intervals at
+the other thresholds. This is limited evidence about tail departures, not
+proof of identical shapes. France and Germany nevertheless show wider pooled
+distributions: their SD changes are 0.52 °C [0.07, 0.93] and 0.59 °C [0.18,
+0.98].
 
 Intervals use 2,000 bootstrap draws, resampling years independently within
 each period and keeping a summer's three months together. At each period's own
@@ -71,14 +82,24 @@ adjust for multiple comparisons.
 
 ## 5.3. Mean and quantile trends
 
-For each country and index, OLS estimates y_t = alpha + beta (t - 1950)/10 +
-u_t. Here t is the calendar year; y_t is the annual June-August mean TXx
-anomaly (°C) or September SPEI-6 (dimensionless); alpha is the fitted level in
-1950 and u_t the residual. Beta measures change per decade. Newey-West HAC
-standard errors use three annual lags. Quantile regression estimates Q_tau(y |
-t) = alpha_tau + beta_tau (t - 1950)/10 on pooled monthly TXx anomalies or
-annual SPEI-6. We fit tau = 0.05, 0.10, 0.25, 0.50, 0.75, 0.90 and 0.95; Table
-4 reports the median and relevant extreme tail.
+For each country and index, OLS estimates
+
+$$
+y_t = \alpha + \beta \frac{t-1950}{10} + u_t.
+$$
+
+Here t is the calendar year; y_t is the annual June-August mean TXx anomaly
+(°C) or September SPEI-6 (dimensionless); alpha is the fitted level in 1950
+and u_t the residual. Beta measures change per decade. Newey-West HAC standard
+errors use three annual lags. Quantile regression estimates
+
+$$
+Q_\tau(y \mid t) = \alpha_\tau + \beta_\tau \frac{t-1950}{10}
+$$
+
+on pooled monthly TXx anomalies or annual SPEI-6. We fit tau = 0.05, 0.10,
+0.25, 0.50, 0.75, 0.90 and 0.95; Table 4 reports the median and relevant
+extreme tail.
 
 **Table 4. Trends per decade; standard errors in parentheses.**
 

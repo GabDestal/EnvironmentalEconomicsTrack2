@@ -1,69 +1,65 @@
 # 4. Figures
 
-All figures are produced by `python scripts/figures.py` from the outputs of
-`scripts/analysis.py`. Numbers quoted below come from `outputs/shift_shape.csv`
-and `outputs/exceedance.csv`.
+All figures use Copernicus Interactive Climate Atlas v2.5, ERA5-Land data,
+accessed 29 October 2026. TXx is a country average of local monthly maxima,
+expressed as an anomaly from the 1961-1990 mean of the same calendar month.
+Early and recent periods are 1961-1990 and 1996-2025.
 
 ![Figure 1](../outputs/figures/fig1_txx_timeseries.png)
 
-**Figure 1.** Summer TXx (temperature of the hottest day of each month) has risen consistently since the 1980s in Spain, France and Germany;
-in Sweden the rise is small relative to a yearly variation, although it also shows a smaller upward trend since the 1990s.
+**Figure 1.** Country-average summer TXx anomalies show upward trends with
+substantial year-to-year variation.
 
-The figure places the two compared periods in the full 1950 to 2025 record. The
-year-to-year spread (several degrees Celsius) is of the same order as the change between
-periods, which is why the rest of the section compares whole distributions
-rather than single years. The dashed line corresponds to the year 1978: ERA5-Land may be less
-consistent before that year, which affects about half of the early period.
+Dots represent the June, July and August values; the line is their annual mean
+over 1950-2025. The shaded periods locate the distribution comparison within
+the full record. The dashed line marks 1978: ERA5-Land may be less consistent
+before that year. Section 5 estimates the trends and their precision.
 
 ![Figure 2](../outputs/figures/fig2_txx_distributions.png)
 
-**Figure 2.** In Spain, France and Germany the recent distribution of summer TXx
-lies clearly to the right of the early one over its whole range, not only in its upper
-tail.
+**Figure 2.** Recent TXx distributions lie further toward hot anomalies in
+Spain, France and Germany; Sweden's distributions overlap more.
 
-Each panel compares the 90 June–August anomalies of the early period (1961–1990) 
-with those of the recent period (1996–2025). In Spain, France and Germany the recent 
-distribution is displaced as a whole : the cool side and the centre moved as well 
-as the hot side, and values below −2 °C have become exceedingly rare. In France and Germany 
-the recent distribution is also wider, with a standard deviation larger by 0.52 °C 
-and 0.59 °C respectively, an increase whose 95% interval excludes zero. In Sweden 
-the two distributions largely overlap, consistent with a mean increase of only 0.63 °C. 
-The figure therefore points mainly to a shift of the whole distribution, 
-with an added widening in France and Germany.
+Each period contains 90 country-month observations. The centre and upper
+percentiles move, so the change is not confined to the hottest values. France
+and Germany also have wider pooled distributions: SD increases by 0.52 °C and
+0.59 °C, with 95% intervals excluding zero. Because periods are not detrended,
+this widening need not represent increased variability around a moving mean.
 
 ![Figure 3](../outputs/figures/fig3_txx_shift_vs_shape.png)
 
-**Figure 3.** In all four countries the upper percentiles of TXx moved by about
-as much as the mean: the data are consistent with a shift of the whole
-distribution, with no clear change in the shape of its tail.
+**Figure 3.** TXx upper percentiles rise, but their extra movement relative to
+the mean is imprecise in every country.
 
-This is the main figure. Under a pure shift theory, every percentile would move by
-exactly the change in the mean. The P95 moved somewhat more than the mean in
-every country (for example +3.28 °C against +2.10 °C in Spain, a >1°C difference), but the
-difference between the two has a 95% interval that includes zero in all four
-countries. The upper tail rests on few observations: the recent values above
-the P95 come from only 3 to 5 distinct summers, so a tail change of moderate
-size could not be detected with these data.
+Under a pure shift, each percentile would move by the mean change. Spain's P95
+rises by 3.28 °C against a mean change of 2.10 °C. The direct interval for
+this difference includes zero, as do the corresponding intervals in the other
+countries. This inference uses the difference intervals reported in Section 5,
+not overlap between the separate intervals plotted here. Only five values lie
+above each period's own P95; recent values come from five summers in Spain,
+three in France, and four in Germany and Sweden. Moderate tail changes remain
+unresolved.
 
 ![Figure 4](../outputs/figures/fig4_txx_thresholds.png)
 
-**Figure 4.** Whatever threshold defines an extreme, the recent frequency of
-exceedances is close to what a pure shift of the early distribution predicts.
+**Figure 4.** Heat exceedances increase at every threshold; the shift
+benchmark accounts for much of the rise, with a larger gap at Germany's P99.
 
-By construction 5% of early values exceed the P95. In the
-recent period this rises to 43 in Spain, 27 in France, 31 in Germany and 9 in
-Sweden. Exceedances multiply most at the highest thresholds even under a pure
-shift, because a shift moves many values across a threshold that few values
-reach. The observed counts track that benchmark closely; the largest gap is
-Germany at the P99, with 24 exceedances against 14 under a pure shift, a gap
-that rests on few events (from 15 summers).
+Five of 90 early observations (5.6%) exceed the interpolated P95. Recent
+counts are 43 in Spain, 27 in France, 31 in Germany and 9 in Sweden, against
+shift-benchmark counts of 48, 29, 27 and 9. At Germany's P99, the recent count
+is 24 from 15 summers, against 14 under the benchmark. These are country-month
+observations, not distinct heatwaves. The count gaps have no estimated
+confidence intervals.
 
 ![Figure 5](../outputs/figures/fig5_spei_drought.png)
 
-**Figure 5.** Late-summer drought conditions (SPEI-6) have become drier on average
-in Spain, France and Germany, with no clear change in Sweden.
+**Figure 5.** Mean September SPEI-6 falls in Spain, France and Germany; Sweden
+shows no clear change between periods.
 
-The change in mean SPEI-6 is −0.77 in Spain, −0.62 in France and −0.58 in
-Germany, with 95% intervals that exclude zero, and +0.17 in Sweden, with an
-interval that includes zero. With 30 values per period, only about two lie below
-the P5, so the data cannot say whether the drought tail changed shape.
+Each point represents one September value, covering April-September climatic
+water balance; there are 30 observations per country and period. Mean changes
+are -0.77 in Spain, -0.62 in France and -0.58 in Germany, with 95% intervals
+excluding zero, and +0.17 in Sweden, with an interval including zero. Only two
+observations lie below each period's own P5. The estimates therefore provide
+limited information about changes in the most severe drought tail.

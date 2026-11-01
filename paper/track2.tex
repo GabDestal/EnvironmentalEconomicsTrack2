@@ -50,6 +50,7 @@
 \patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
 \makeatother
 \usepackage{graphicx}
+\graphicspath{{../outputs/figures/}}
 \makeatletter
 \newsavebox\pandoc@box
 \newcommand*\pandocbounded[1]{% scales image to fit in text height/width
@@ -81,6 +82,8 @@
 \author{}
 \date{}
 
+% Red placeholder for values still to be filled in from outputs/. Search for \todo before submitting.
+\newcommand{\todo}[1]{\textcolor{red}{[#1]}}
 
 \usepackage{microtype}
 \usepackage{etoolbox}
@@ -95,6 +98,10 @@
 {\LARGE\bfseries Extreme events: a shift or a change in shape?\par}
 \vspace{6pt}
 {\small Environmental Economics -- BSc AIDAMS -- Track 2\par}
+\vspace{2pt}
+{\small {Gabriel, Erdem, Charles, Liam, Chris}\par}
+\vspace{2pt}
+{\small Code and data: \url{https://github.com/GabDestal/EnvironmentalEconomicsTrack2}\par}
 \end{center}
 
 
@@ -127,8 +134,7 @@ variability around the mean stays constant. More exceedances therefore
 do not, by themselves, establish that a tail has become heavier. For
 water managers, agricultural producers and planners, both the level of
 the climate variable and the distribution around that level matter. Our
-data measure climate conditions; they do not measure economic losses or
-identify the benefits of an adaptation policy.
+data measure climate conditions, not economic losses.
 
 Three references frame the question. IPCC AR6 Chapter 11 documents
 changes in the frequency and intensity of temperature extremes and
@@ -138,11 +144,11 @@ Hansen, Sato and Ruedy (2012) show a shift toward hotter seasonal
 temperature anomalies and a larger occurrence of exceptionally hot
 summers. Rhines and Huybers (2013) question the inference of increased
 variability from those distributions: normalisation, trends and changing
-station coverage can produce apparent widening. Their result makes the
-empirical task clear. We must compare tail changes with a shift
-benchmark, rather than infer a change in shape from an increase in
-extremes alone. These papers concern seasonal temperatures and different
-spatial aggregations; our analysis is not a direct replication.
+station coverage can produce apparent widening. We must therefore
+compare tail changes with a shift benchmark, rather than infer a change
+in shape from an increase in extremes alone. These papers concern
+seasonal temperatures and different spatial aggregations; our analysis
+is not a direct replication.
 
 We use two complementary indices: monthly TXx for June-August, measuring
 the country average of local monthly temperature maxima, and September
@@ -162,16 +168,13 @@ at different rates. The results describe these four country-level series
 over the observed record. They do not attribute individual events to
 greenhouse gas emissions or predict future extremes.
 
-\clearpage
-
 \section{2. Data}\label{data}
 
 We use the Copernicus Interactive Climate Atlas v2.5, produced by the
 Copernicus Climate Change Service (C3S), with regional-information
-exports downloaded on 29 October 2026. The underlying dataset is
+exports downloaded on 29 October 2026 (C3S, 2026). The underlying dataset is
 ERA5-Land, ECMWF\textquotesingle s land-surface reanalysis on a 0.1°
-grid (C3S, 2023; 2024b). The four countries, Spain, France, Germany and
-Sweden, span southern to northern Europe. All 16 downloaded series cover
+grid (C3S, 2023; 2024b). All 16 downloaded series cover
 1950-2025, with 76 annual observations each. The raw-data check confirms
 common dataset and version labels, complete coverage, unique years and
 no missing values. We perform no imputation or interpolation. The
@@ -207,8 +210,8 @@ projections; this inconsistency remains a documentation limitation.
 
 \subsection{Data limitations}\label{data-limitations}
 
-These data have several limitations. ERA5-Land is a model-based
-reanalysis, not a collection of station measurements. The Atlas disables
+ERA5-Land is a model-based reanalysis, not a collection of station
+measurements. The Atlas disables
 trends before 1978 because of potential inconsistency in the ERA5
 forcing (C3S, 2024a). Our early comparison period overlaps those years,
 so early-recent changes may partly reflect data artefacts. The post-1978
@@ -226,8 +229,6 @@ of -1.5. Finally, extreme percentiles rest on few observations. Section
 5 reports whole-year bootstrap intervals, which preserve dependence
 within summers but not across years.
 
-\clearpage
-
 \section{3. Summary statistics}\label{summary-statistics}
 
 We compare 1961-1990 (early, E) with 1996-2025 (recent, R). TXx pools
@@ -236,7 +237,7 @@ month. SPEI-6 is used as published, one September value per year. The
 distributions contain 90 TXx values or 30 SPEI-6 values per country and
 period. Percentiles use linear interpolation.
 
-Table 1. Summary statistics: early and recent distributions.
+\textbf{Table 1. Summary statistics: early and recent distributions.}
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
@@ -339,59 +340,65 @@ and Germany, while Sweden changes little. Tail precision is limited:
 each period has only five TXx observations above its own P95 and two
 SPEI-6 observations below its own P5.
 
-\clearpage
-
 \section{4. Figures}\label{figures}
 
-\includegraphics[width=5.65in,height=4.29315in]{../outputs/figures/fig1_txx_timeseries.png}
+\begin{center}
+\includegraphics[width=5.2in]{fig1_txx_timeseries.png}
+\end{center}
 
 \textbf{Figure 1.} Country-average summer TXx anomalies show upward
 trends with substantial year-to-year variation.
+\emph{TXx anomalies (°C) relative to the 1961-1990 mean of the same
+country and month; Spain, France, Germany and Sweden; June-August,
+1950-2025. Source: C3S, Copernicus Interactive Climate Atlas v2.5,
+ERA5-Land, accessed 29 October 2026; our calculations.}
 
-\includegraphics[width=5.65in,height=4.21362in]{../outputs/figures/fig2_txx_distributions.png}
+\begin{center}
+\includegraphics[width=5.2in]{fig2_txx_distributions.png}
+\end{center}
 
 \textbf{Figure 2.} Recent TXx distributions lie further toward hot
 anomalies in Spain, France and Germany; Sweden\textquotesingle s
 distributions overlap more.
+\emph{Pooled June-August TXx anomalies (°C), 1961-1990 vs 1996-2025,
+90 observations per country and period. Source: as Figure 1.}
 
-\clearpage
-
-\section{4. Figures}\label{figures-1}
-
-\includegraphics[width=5.65in,height=4.29853in]{../outputs/figures/fig3_txx_shift_vs_shape.png}
+\begin{center}
+\includegraphics[width=5.2in]{fig3_txx_shift_vs_shape.png}
+\end{center}
 
 \textbf{Figure 3.} TXx upper percentiles rise, but their extra movement
 relative to the mean is imprecise in every country.
+\emph{Change in TXx percentiles and in the mean (°C), 1996-2025 minus
+1961-1990, with 95\% whole-year bootstrap intervals (2,000 draws).
+Source: as Figure 1.}
 
-\includegraphics[width=5.65in,height=4.26117in]{../outputs/figures/fig4_txx_thresholds.png}
+\begin{center}
+\includegraphics[width=5.2in]{fig4_txx_thresholds.png}
+\end{center}
 
 \textbf{Figure 4.} Heat exceedances increase at every threshold; the
 shift benchmark accounts for much of the rise, with a larger gap at
 Germany\textquotesingle s P99.
+\emph{Observations above fixed 1961-1990 thresholds (P75, P90, P95,
+P99), out of 90 per period: early, recent and shift benchmark.
+Source: as Figure 1.}
 
-\clearpage
-
-\section{4. Figures}\label{figures-2}
-
-\includegraphics[width=6.7in,height=3.33742in]{../outputs/figures/fig5_spei_drought.png}
+\begin{center}
+\includegraphics[width=6.2in]{fig5_spei_drought.png}
+\end{center}
 
 \textbf{Figure 5.} Mean September SPEI-6 falls in Spain, France and
 Germany; Sweden shows no clear change between periods.
+\emph{September SPEI-6 (dimensionless; negative = drier), 1961-1990 vs
+1996-2025, 30 observations per country and period; each point is one
+year. Source: as Figure 1.}
 
-Each point represents one September value, covering April-September
-climatic water balance; there are 30 observations per country and
-period. Mean changes are -0.77 in Spain, -0.62 in France and -0.58 in
+Mean SPEI-6 changes are -0.77 in Spain, -0.62 in France and -0.58 in
 Germany, with 95\% intervals excluding zero, and +0.17 in Sweden, with
 an interval including zero. Only two observations lie below each
-period\textquotesingle s own P5. The estimates therefore provide limited
-information about changes in the most severe drought tail.
-
-The fixed-threshold comparison and the quantile regressions in Section 5
-assess whether these changes extend beyond a shift in the mean. A
-national index can change substantially without identifying a change in
-local event duration or an economic loss.
-
-\clearpage
+period\textquotesingle s own P5, so the figure says little about the
+most severe drought tail.
 
 \section{5. Econometrics}\label{econometrics}
 
@@ -486,7 +493,11 @@ We measure departure from a shift by
 
 where Q is the percentile at p and E and R denote the early and recent
 periods. A positive \(S_p\) means extra movement toward heat for TXx; a
-negative value means extra movement toward dryness for SPEI-6. For TXx
+negative value means extra movement toward dryness for SPEI-6. The mean
+TXx changes themselves have 95\% bootstrap intervals of
+{[}1.47, 2.72{]} °C in Spain, {[}1.66, 3.24{]} °C in France, {[}1.18,
+2.52{]} °C in Germany and {[}-0.14, 1.34{]} °C in Sweden; only
+Sweden\textquotesingle s includes zero. For TXx
 at P95, \(S_p\) is 1.18 °C in Spain, 0.75 °C in France, 0.55 °C in Germany
 and 0.37 °C in Sweden. Their 95\% bootstrap intervals are {[}-0.40,
 1.72{]}, {[}-0.54, 1.70{]}, {[}-0.31, 1.47{]} and {[}-0.84, 1.03{]} °C.
@@ -496,17 +507,23 @@ identical shapes. France and Germany nevertheless show wider pooled
 distributions: their SD changes are 0.52 °C {[}0.07, 0.93{]} and 0.59 °C
 {[}0.18, 0.98{]}.
 
+The lower TXx tail shows where that widening comes from. From Table 1,
+\(S_{5}\) is +0.07 °C in Spain, -0.73 °C in France, -0.81 °C in Germany
+and +0.37 °C in Sweden. In France and Germany the cool end of the summer
+distribution lagged the mean by about as much as the hot end ran ahead
+of it, so their widening is roughly symmetric rather than a specifically
+heavier hot tail. In Spain only the upper tail moved beyond the mean. In
+Sweden both tails moved by the same 1.00 °C, consistent with a uniform
+shift. We compute no intervals for these lower-tail contrasts, so they
+are descriptive.
+
 Intervals use 2,000 bootstrap draws, resampling years independently
 within each period and keeping a summer\textquotesingle s three months
-together. At each period\textquotesingle s own P95, only five TXx values
-lie above the line; at its own P5, only two SPEI-6 values lie below it.
-We do not detrend within periods, so changes in pooled spread can
-include changes in the mean within a period (Rhines and Huybers, 2013).
-Resampling single years preserves dependence within summers but does not
-preserve dependence across years; intervals are pointwise and do not
-adjust for multiple comparisons.
-
-\clearpage
+together. We do not detrend within periods, so changes in pooled spread
+can include changes in the mean within a period (Rhines and Huybers,
+2013). Resampling single years preserves dependence within summers but
+not across years; intervals are pointwise and do not adjust for
+multiple comparisons.
 
 \subsection{5.3. Mean and quantile
 trends}\label{mean-and-quantile-trends}
@@ -604,8 +621,6 @@ post-1978 sample. Different slopes across these nested samples are not a
 formal test of acceleration. All regressions describe association with
 time; they do not identify a causal effect.
 
-\clearpage
-
 \section{6. What we can and cannot
 conclude}\label{what-we-can-and-cannot-conclude}
 
@@ -613,21 +628,25 @@ The clearest result is a shift toward hotter summer maxima in Spain,
 France and Germany. Between 1961-1990 and 1996-2025, mean TXx anomalies
 rise by 2.10 °C, 2.44 °C and 1.85 °C, respectively.
 Sweden\textquotesingle s estimated rise is smaller, 0.63 °C, and its
-period-difference interval includes zero, although its full-record mean
-trend is positive with a HAC interval excluding zero. A comparison of
-two periods and a trend over the full record answer different questions
-and need not have the same precision.
+period-difference interval includes zero (Section 5.2), although its
+full-record mean trend is positive with a HAC interval excluding zero. A
+comparison of two periods and a trend over the full record answer
+different questions and need not have the same precision.
 
 Heat observations cross fixed historical thresholds more often in all
 four countries, whichever of P75, P90, P95 or P99 defines the extreme. A
 shift of the early distribution by the observed mean change reproduces
 much of that increase. The upper percentiles also rise, but their extra
-movement relative to the mean is imprecise. The quantile regressions
-similarly do not establish a faster P95 trend than the median. The
+movement relative to the mean is imprecise, and the quantile
+regressions do not establish a faster P95 trend than the median. The
 evidence therefore supports a substantial shift, while leaving moderate
 changes in the upper tail unresolved. France and Germany have wider
 pooled distributions, so the results do not justify a blanket claim that
-shape is unchanged.
+shape is unchanged. Their widening is roughly symmetric, with the cool
+end of the summer distribution lagging the mean as much as the hot end
+leads it, rather than a specifically heavier hot tail. Part of it may
+also reflect warming within 1996-2025 itself, since we do not detrend
+within periods.
 
 For drought, mean September SPEI-6 falls in Spain, France and Germany,
 indicating a drier April-September climatic water balance. Sweden shows
@@ -645,9 +664,7 @@ absorbs many processes; it cannot isolate greenhouse gas forcing,
 land-use change or a particular economic mechanism. Causal attribution
 would require a credible counterfactual, such as climate-model ensembles
 with and without human forcing, together with evidence on model
-performance and observational uncertainty. The broader attribution
-evidence assessed by Seneviratne et al. (2021) does not turn our
-regressions into an attribution design.
+performance and observational uncertainty.
 
 Three limits are central. National averages smooth local extremes, and
 these indices do not count heatwave duration or observed crop and income
@@ -664,28 +681,6 @@ tails have systematically become heavier.
 
 \section*{References}\label{references}
 
-Hansen, J., Sato, M., and Ruedy, R. (2012). Perception of climate
-change. \emph{Proceedings of the National Academy of Sciences}, 109(37),
-E2415-E2423. \url{https://doi.org/10.1073/pnas.1205276109}
-
-Rhines, A., and Huybers, P. (2013). Frequent summer temperature extremes
-reflect changes in the mean, not the variance. \emph{Proceedings of the
-National Academy of Sciences}, 110(7), E546.
-\url{https://doi.org/10.1073/pnas.1218748110}
-
-Seneviratne, S. I., Zhang, X., Adnan, M., Badi, W., Dereczynski, C., Di
-Luca, A., Ghosh, S., Iskandar, I., Kossin, J., Lewis, S., Otto, F.,
-Pinto, I., Satoh, M., Vicente-Serrano, S. M., Wehner, M., and Zhou, B.
-(2021). Weather and climate extreme events in a changing climate. In
-\emph{Climate Change 2021: The Physical Science Basis}, Chapter 11, pp.
-1513-1766. Cambridge University Press.
-\url{https://doi.org/10.1017/9781009157896.013}
-
-Copernicus Climate Change Service (2026). \emph{Copernicus Interactive
-Climate Atlas}, version v2.5, ERA5-Land regional-information exports for
-Spain, France, Germany and Sweden, 1950-2025 {[}Data{]}. Accessed 29
-October 2026. \url{https://atlas.climate.copernicus.eu/}
-
 Copernicus Climate Change Service (2023). \emph{Gridded data
 underpinning the Copernicus Interactive Climate Atlas: Description of
 the datasets and variables}. Updated 28 May 2026; accessed 29 October
@@ -699,9 +694,31 @@ Copernicus Climate Change Service (2024b). \emph{Gridded dataset
 underpinning the Copernicus Interactive Climate Atlas} {[}Data set{]}.
 ECMWF. \url{https://doi.org/10.24381/cds.h35hb680}
 
+Copernicus Climate Change Service (2026). \emph{Copernicus Interactive
+Climate Atlas}, version v2.5, ERA5-Land regional-information exports for
+Spain, France, Germany and Sweden, 1950-2025 {[}Data{]}. Accessed 29
+October 2026. \url{https://atlas.climate.copernicus.eu/}
+
+Hansen, J., Sato, M., and Ruedy, R. (2012). Perception of climate
+change. \emph{Proceedings of the National Academy of Sciences}, 109(37),
+E2415-E2423. \url{https://doi.org/10.1073/pnas.1205276109}
+
 Hargreaves, G. H., and Samani, Z. A. (1985). Reference crop
 evapotranspiration from temperature. \emph{Applied Engineering in
 Agriculture}, 1(2), 96-99. \url{https://doi.org/10.13031/2013.26773}
+
+Rhines, A., and Huybers, P. (2013). Frequent summer temperature extremes
+reflect changes in the mean, not the variance. \emph{Proceedings of the
+National Academy of Sciences}, 110(7), E546.
+\url{https://doi.org/10.1073/pnas.1218748110}
+
+Seneviratne, S. I., Zhang, X., Adnan, M., Badi, W., Dereczynski, C., Di
+Luca, A., Ghosh, S., Iskandar, I., Kossin, J., Lewis, S., Otto, F.,
+Pinto, I., Satoh, M., Vicente-Serrano, S. M., Wehner, M., and Zhou, B.
+(2021). Weather and climate extreme events in a changing climate. In
+\emph{Climate Change 2021: The Physical Science Basis}, Chapter 11, pp.
+1513-1766. Cambridge University Press.
+\url{https://doi.org/10.1017/9781009157896.013}
 
 \section*{Statement on the use of AI}\label{statement-on-the-use-of-ai}
 

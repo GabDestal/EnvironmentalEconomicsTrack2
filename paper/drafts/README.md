@@ -1,7 +1,7 @@
 # Paper formats
 
 - `track2.pdf`: LaTeX research paper with an abstract, bold section headings,
-  typeset equations and publication-style tables. Ten pages total, including figures, references and the AI statement.
+  typeset equations and publication-style tables. Nine pages total, including figures, references and the AI statement.
 - `track2_full_paper.docx`: editable Word version of the full paper.
 - `track2_d_e_sections.docx`: Sections 1, 5 and 6, references and AI statement.
 
